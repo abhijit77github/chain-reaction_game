@@ -184,9 +184,9 @@ urls=[
 
 ]
 
-
+port = int(os.environ.get('PORT', 5000))
 
 if __name__ == "__main__":
     app= tornado.web.Application(urls, **settings)
-    app.listen(80)
+    app.listen(port)
     tornado.ioloop.IOLoop.current().start()
