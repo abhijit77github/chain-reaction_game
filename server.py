@@ -119,9 +119,9 @@ class SocketHandler(tornado.websocket.WebSocketHandler):
 
       
     def on_close(self): 
-        #print("client disconnected")    
-
- 
+        #print("client disconnected")
+        pass
+    
     def check_origin(self, origin):
         return True
 
