@@ -46,7 +46,6 @@ class Chain:
             self.crnt_plrs = plrs
             self.vallid_plr = plrs
             self.add_nbr()
-            #print(self.crnt_plrs)
             return plrs
 
     def get_nbr(self, pos):
@@ -114,11 +113,15 @@ class Chain:
         if p>= len(self.box[pos[0]][pos[1]].nbr):
             flag = False
             cnt = 0
+            dbug_lst=[]
             nbr = self.box[pos[0]][pos[1]].nbr
             self.box[pos[0]][pos[1]].col = None
             self.box[pos[0]][pos[1]].cnt = 0
             while not flag:
                 flag = True
+                if cnt>=200:
+                    break
+
                 new_nbr = []
                 for i in nbr:
                     self.box[i[0]][i[1]].col = plr_index
@@ -133,8 +136,7 @@ class Chain:
 
                 nbr = new_nbr
                 cnt += 1
-            #print(f" while loop ran : {cnt} times")
-            #print("move executed")
+
 
 
     def overflow(self,plr_index,pos):
@@ -165,7 +167,7 @@ class Chain:
                     self.box[k[0]][k[1]].cnt +=1
                     self.box[k[0]][k[1]].col = plr_index
                 self.brust(plr_index,nbr_lst,(rec_cnt +1))
-        #print(rec_cnt)
+        print(rec_cnt)
         return rec_cnt
 
     def next_turn(self, crnt_plr_index):
@@ -174,12 +176,12 @@ class Chain:
 
         else:
             p = crnt_plr_index + 1
-        #print(p)
-        #print(self.crnt_plrs)
+        print(p)
+        print(self.crnt_plrs)
         if p in self.crnt_plrs:
             return p
         else:
-            #print("recursion should be called")
+            print("recursion should be called")
             return self.next_turn(p)
 
     def play(self, plr_index, pos):
@@ -187,12 +189,12 @@ class Chain:
             self.move(plr_index, pos)
             if self.is_game_ended():
                 # provide game result
-                #print("game ended")
+                print("game ended")
                 self.terminated = True
             else:
                 next = self.next_turn(plr_index)
                 self.crnt_plr_indx = next
-                #print(f'next returned {self.crnt_plr_indx}')
+                print(f'next returned {self.crnt_plr_indx}')
                 return next
         else:
             return self.crnt_plr_indx
@@ -209,7 +211,7 @@ class Chain:
             self.crnt_plrs = col_lst
             self.crnt_plrs.sort()
         if (len(col_lst) == 1) and self.checked == True:
-            #print(f"game ended --------winner is {col_lst[0]}")
+            print(f"game ended --------winner is {col_lst[0]}")
             self.result=col_lst[0]
             return True
         else:

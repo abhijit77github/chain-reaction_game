@@ -13,7 +13,7 @@ from game_manager import GameManager
 APP_DIR = os.path.dirname(os.path.realpath(__file__))
 settings = {
     "template_path": os.path.join(APP_DIR, "templates"),
-    "static_path": os.path.join(APP_DIR, "static")
+    "static_path": os.path.join(APP_DIR, "hello_world/dist")
    
 }
 
@@ -37,7 +37,7 @@ class SocketHandler(tornado.websocket.WebSocketHandler):
     def open(self):
         """Opens a Socket Connection to client
         """
-        #print(" client connected")
+        print(" client connected")
         self.send_message("message", message="Connected to Game Server")
 
     def on_message(self,message):
@@ -61,12 +61,12 @@ class SocketHandler(tornado.websocket.WebSocketHandler):
     
         data = json.loads(message)
         action = data.get("action", "")
-        #print(action,data.get("data"))
+        print(action,data.get("data"))
         if action == "move":
             # Game is going on
             # Set turn to False and send message to opponent
             player_selection = data.get("player_move")
-            #print(player_selection)
+            print(player_selection)
             player_move = (int(player_selection[0]), int(player_selection[1]))
             if player_move:
                 self.game_manager.record_move(self.game_id, player_move, self)
@@ -75,7 +75,7 @@ class SocketHandler(tornado.websocket.WebSocketHandler):
             if self.game_manager.has_game_ended(self.game_id):
                 #game_result = self.game_manager.get_game_result(self.game_id, self)
                 self.game_manager.result(self.game_id)
-                #print("game ended")
+                print("game ended")
 
                
 
@@ -119,9 +119,9 @@ class SocketHandler(tornado.websocket.WebSocketHandler):
 
       
     def on_close(self): 
-        #print("client disconnected")
-        pass
+        print("client disconnected")    
 
+ 
     def check_origin(self, origin):
         return True
 
