@@ -107,7 +107,8 @@ class SocketHandler(tornado.websocket.WebSocketHandler):
             self.game_manager.start(self.game_id)
             self.send_message(action="started", data="started")
             self.send_message(action="turn")
-
+        elif action == "ping":
+            pass
 
         elif action == "abort":
             self.game_manager.abort_game(self.game_id)
